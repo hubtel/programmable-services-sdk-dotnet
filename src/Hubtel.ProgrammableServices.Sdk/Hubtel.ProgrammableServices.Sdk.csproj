@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>An improved version of USSD Framework SDK. 
+      Presents a simplified, unified experience for building services that 
+      render on all Hubtel platform channels (Web, POS, Mobile and USSD)</Description>
+    <PackageReleaseNotes>
+      First release. This version does the following:
+      - Easy service registration in ConfigureServices
+      - Quick setup of programmable service using middleware extensions
+      - Out of the box DI support for controllers
+    </PackageReleaseNotes>
+    <PackageIcon>hub.png</PackageIcon>
+    
+    <Version>1.1.0</Version>
+    
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="1.0.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="hub.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+</Project>
