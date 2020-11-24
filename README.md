@@ -1,7 +1,7 @@
 
 # Getting Started with Programmable Services SDK
 
-This SDK helps you build service that can be deployed on Hubtel's platform in all channels (Web, USSD and Hubtel mobile app). Here are a few advantages of using this SDK:
+This SDK helps you to build apps that are accessible on Hubtel's platform channels (Web, USSD and Hubtel mobile apps). Here are a few advantages of using this SDK:
 - Improved response times: Reflected instances are cached at startup and served faster
 - Dependency Injection: Controllers can now leverage .NET Core's DI pattern. No need to attempt to create custom DI containers
 - Unified experience for USSD, Web, POS and mobile apps. JSON response from this SDK contains properties that are actually needed by Hubtel's Programmable Services API. No more "NextRoute", "IsRelease" properties hanging around.
