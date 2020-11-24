@@ -12,9 +12,11 @@
       - Out of the box DI support for controllers
     </PackageReleaseNotes>
     <PackageIcon>hub.png</PackageIcon>
-    
+     <Company>Hubtel</Company>
+    <Authors>Hubtel Engineers</Authors>
     <Version>1.1.0</Version>
-    
+     <PackageId>Hubtel.ProgrammableServices.Sdk</PackageId>
+       <RepositoryUrl>https://github.com/hubtel/programmable-services-sdk-dotnet</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
