@@ -5,6 +5,18 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hubtel.ProgrammableServices.Sdk", "src\Hubtel.ProgrammableServices.Sdk\Hubtel.ProgrammableServices.Sdk.csproj", "{A474ACB5-AADC-4459-95DE-91A24FF592B2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{44C644D2-4EA5-4AD9-9514-02867879F810}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{451AB4CC-55AA-43E0-B222-973077B3E3B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "example", "example", "{09FD1DDB-BF03-4BEB-8A57-759316B09A19}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{B66BDF3A-828F-4D9E-8DC9-336461CBD38F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProgrammableServicesSampleApp", "examples\WebApplication1\ProgrammableServicesSampleApp.csproj", "{C797B037-C74E-489E-A30E-D15A46A01064}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hubtel.ProgrammableServices.Sdk.UnitTests", "tests\Hubtel.ProgrammableServices.Sdk.UnitTests\Hubtel.ProgrammableServices.Sdk.UnitTests.csproj", "{A7299614-1AB2-4146-AB37-0E5BA8ED36E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +27,22 @@ Global
 		{A474ACB5-AADC-4459-95DE-91A24FF592B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A474ACB5-AADC-4459-95DE-91A24FF592B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A474ACB5-AADC-4459-95DE-91A24FF592B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C797B037-C74E-489E-A30E-D15A46A01064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C797B037-C74E-489E-A30E-D15A46A01064}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C797B037-C74E-489E-A30E-D15A46A01064}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C797B037-C74E-489E-A30E-D15A46A01064}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7299614-1AB2-4146-AB37-0E5BA8ED36E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7299614-1AB2-4146-AB37-0E5BA8ED36E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7299614-1AB2-4146-AB37-0E5BA8ED36E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7299614-1AB2-4146-AB37-0E5BA8ED36E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A474ACB5-AADC-4459-95DE-91A24FF592B2} = {44C644D2-4EA5-4AD9-9514-02867879F810}
+		{C797B037-C74E-489E-A30E-D15A46A01064} = {09FD1DDB-BF03-4BEB-8A57-759316B09A19}
+		{A7299614-1AB2-4146-AB37-0E5BA8ED36E5} = {451AB4CC-55AA-43E0-B222-973077B3E3B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7F21F51F-4E35-424B-9254-4BC4C2477CE9}
