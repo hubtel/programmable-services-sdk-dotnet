@@ -1,0 +1,39 @@
+name: "Hubtel.ProgrammableServices.Sdk.Dotnet"
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+    PROJECT_PATH: 'src\Hubtel.ProgrammableServices.Sdk\Hubtel.ProgrammableServices.Sdk.csproj'
+    TEST_PATH: 'tests\Hubtel.ProgrammableServices.Sdk.UnitTests\Hubtel.ProgrammableServices.Sdk.UnitTests.csproj'
+    PACKAGE_OUTPUT_DIRECTORY: ${{github.workspace}}\output
+    NUGET_SOURCE_URL: ''https://api.nuget.org/v3/index.json''
+
+jobs:
+	deploy:
+	name:'Deploy'
+    runs-on: 'ubuntu-latest'
+    
+    steps:
+    - name: 'Setup .NET Core'
+    - uses: actions/checkout@v2
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.x'
+    
+    - name: 'Restore Dependencies'
+      run: dotnet restore ${{env.PROJECT_PATH}}
+    
+    - name: 'Build Project
+      run: dotnet build ${{env.PROJECT_PATH}} --configuration Release --no-restore
+    
+    - name: 'Test'
+      run: dotnet run ${{env.TEST_PATH}}
+
+    - name: 'Pack Package'
+      run: dotnet pack ${{env.PROJECT_PATH}} --configuration Release --no-restore --no-build --include-symbols --output ${{env.PACKAGE_OUTPUT_DIRECTORY}}
+
+    - name: 'Push Package'
+      run: dotnet nuget push ${{env.PACKAGE_OUTPUT_DIRECTORY}}\*.nupkg -k ${{secrets.NUGET_API_KEY}} -S ${{env.NUGET_SOURCE_URL}}

@@ -17,6 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProgrammableServicesSampleA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hubtel.ProgrammableServices.Sdk.UnitTests", "tests\Hubtel.ProgrammableServices.Sdk.UnitTests\Hubtel.ProgrammableServices.Sdk.UnitTests.csproj", "{A7299614-1AB2-4146-AB37-0E5BA8ED36E5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{F59D7DCD-1EE1-436D-91B1-722E4F3CD21C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{098B0CC1-9027-4013-B6FA-08BB7BF504C3}"
+	ProjectSection(SolutionItems) = preProject
+		nuget.yml = nuget.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +50,7 @@ Global
 		{A474ACB5-AADC-4459-95DE-91A24FF592B2} = {44C644D2-4EA5-4AD9-9514-02867879F810}
 		{C797B037-C74E-489E-A30E-D15A46A01064} = {09FD1DDB-BF03-4BEB-8A57-759316B09A19}
 		{A7299614-1AB2-4146-AB37-0E5BA8ED36E5} = {451AB4CC-55AA-43E0-B222-973077B3E3B5}
+		{098B0CC1-9027-4013-B6FA-08BB7BF504C3} = {F59D7DCD-1EE1-436D-91B1-722E4F3CD21C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7F21F51F-4E35-424B-9254-4BC4C2477CE9}
