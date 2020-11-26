@@ -1,4 +1,4 @@
-name: "Hubtel.ProgrammableServices.Sdk.Dotnet"
+name: "Hubtel.ProgrammableServices.Sdk.Dotnet.CI"
 on:
   push:
     branches: [ master ]
@@ -26,19 +26,8 @@ jobs:
     - name: 'Restore Dependencies'
       run: dotnet restore ${{env.PROJECT_PATH}}
     
-    - name: 'Build Project
+    - name: 'Build Project'
       run: dotnet build ${{env.PROJECT_PATH}} --configuration Release --no-restore
     
     - name: 'Test'
       run: dotnet run ${{env.TEST_PATH}}
-
-    - name: 'Pack Package'
-      run: dotnet pack ${{env.PROJECT_PATH}} --configuration Release --no-restore --no-build --include-symbols --output ${{env.PACKAGE_OUTPUT_DIRECTORY}}
-
-    - name: 'Push Package'
-            uses: brandedoutcast/publish-nuget@v2
-      with:
-        PROJECT_FILE_PATH: ${{env.PROJECT_PATH}}
-        VERSION_REGEX: '^\s*<PackageVersion>(.*)<\/PackageVersion>\s*$'
-        TAG_FORMAT: '*'
-        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
