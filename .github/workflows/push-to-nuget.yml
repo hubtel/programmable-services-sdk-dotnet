@@ -1,30 +1,25 @@
-name: SDK Release
+name: Nuget Release
 
 on:
-  workflow_run:
-    workflows: ["SDK Build"]
+  push:
     branches: [ master ]
-    types:
-      - completed
 
 jobs:
-  publish-nuget:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v1
-
-      - name: Setup .NET Core @ Latest
-        uses: actions/setup-dotnet@v1
-        with:
-          source-url: https://nuget.pkg.github.com/<organization>/index.json
-        env:
-          NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}        
-          
-      - name: Build solution and generate NuGet package
-        run: |  
-          cd <project>
-          dotnet pack -c Release -o out  
-
-      - name: Push generated package to GitHub registry
-        run: dotnet nuget push ./<project>/out/*.nupkg --skip-duplicate --no-symbols true
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Publish Hubtel.ProgrammableServices.Sdk
+      uses: brandedoutcast/publish-nuget@v2.5.2
+      with:
+          PROJECT_FILE_PATH: src/Hubtel.ProgrammableServices.Sdk/Hubtel.ProgrammableServices.Sdk.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
