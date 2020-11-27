@@ -1,4 +1,4 @@
-name: Hubtel Programmable Services SDK Build
+name: SDK Build
 
 on:
   push:
