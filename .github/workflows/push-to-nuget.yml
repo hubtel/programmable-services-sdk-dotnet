@@ -1,8 +1,8 @@
-name: Hubtel Programmable Services SDK - Release
+name: SDK Release
 
 on:
   workflow_run:
-    workflows: ["Hubtel Programmable Services SDK Build"]
+    workflows: ["SDK Build"]
     branches: [ master ]
     types:
       - completed
