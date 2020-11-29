@@ -7,7 +7,10 @@ on:
 jobs:  
   build:  
   
-    runs-on: ubuntu-latest  
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   
     steps:  
     - uses: actions/checkout@v2  
@@ -20,10 +23,10 @@ jobs:
     - name: Build  
       run: dotnet build --configuration Release --no-restore  
     - name: Test  
-      run: dotnet test --no-restore --verbosity normal  
-    - name: Publish  
-      uses: brandedoutcast/publish-nuget@v2.5.2  
-      with:   
-        PROJECT_FILE_PATH: src/Hubtel.ProgrammableServices.Sdk/Hubtel.ProgrammableServices.Sdk.csproj
-        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-        PACKAGE_NAME: Hubtel.ProgrammableServices
+      run: dotnet test --no-restore --verbosity normal
+    - name: Pack with dotnet
+      run: dotnet pack src/Hubtel.ProgrammableServices.Sdk/Hubtel.ProgrammableServices.Sdk.csproj --output nuget-packages --configuration Release
+    - name: Push with dotnet
+      run: dotnet nuget push nuget-packages/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      env:
+        DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLE: false
