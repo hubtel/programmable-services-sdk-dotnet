@@ -9,6 +9,8 @@ on:
 
 env:
     PROJECT_PATH: 'src\Hubtel.ProgrammableServices.Sdk\Hubtel.ProgrammableServices.Sdk.csproj'
+    PACKAGE_OUTPUT_DIRECTORY: ${{github.workspace}}\output
+    NUGET_SOURCE_URL: ''https://api.nuget.org/v3/index.json''
 
 jobs:
   publish-nuget:
@@ -21,15 +23,14 @@ jobs:
         dotnet-version: '3.1.x'
 
     - name: 'Restore Dependencies'
-      run: dotnet restore ${{env.PROJECT_PATH}}
+      run: dotnet restore ${{ env.PROJECT_PATH }}
 
     - name: 'Build Project'
-      run: dotnet build ${{env.PROJECT_PATH}} --configuration Release --no-restore
+      run: dotnet build ${{ env.PROJECT_PATH }} --configuration Release --no-restore
 
-    - name: Publish to NuGet
-      uses: brandedoutcast/publish-nuget@v2
-      with:
-        PROJECT_FILE_PATH: ${{env.PROJECT_PATH}}
-        VERSION_REGEX: '^\s*<PackageVersion>(.*)<\/PackageVersion>\s*$'
-        TAG_FORMAT: '*'
-        NUGET_KEY: ${{secrets.NUGET_API_KEY}} 
+    - name: 'Pack Project'
+      run: dotnet pack ${{ env.PROJECT_PATH }} --configuration Release --no-restore --no-build --include-symbols -p: '1.1.0' --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+    
+    - name: 'Push Package'
+      run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s ${{ env.NUGET_SOURCE_URL }}
+
