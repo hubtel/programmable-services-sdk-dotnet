@@ -18,8 +18,11 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
-    - name: Publish Hubtel.ProgrammableServices.Sdk
-      uses: brandedoutcast/publish-nuget@v2.5.2
-      with:
-          PROJECT_FILE_PATH: src/Hubtel.ProgrammableServices.Sdk/Hubtel.ProgrammableServices.Sdk.csproj
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+    - name: Pack
+      run: dotnet pack --no-build --configuration Release MintPlayer.SeasonChecker/MintPlayer.SeasonChecker.csproj --output .
+    - name: PushNuget
+      run: dotnet nuget push *.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{secrets.NUGET_API_KEY}} --skip-duplicate
+    - name: AddGithubSource
+      run: dotnet nuget add source --username augustine@hubtel.com --password ${{secrets.NUGET_API_KEY}} --name github https://nuget.pkg.github.com/hubtel/index.json
+    - name: PushGithub
+      run: dotnet nuget push *.nupkg --source github --skip-duplicate
