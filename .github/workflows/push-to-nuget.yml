@@ -27,4 +27,3 @@ jobs:
         PROJECT_FILE_PATH: src/Hubtel.ProgrammableServices.Sdk/Hubtel.ProgrammableServices.Sdk.csproj
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         PACKAGE_NAME: Hubtel.ProgrammableServices
-        VERSION_REGEX: '^\s*<Version>(.*)<\/Version>\s*$'
