@@ -12,28 +12,21 @@ jobs:
       DOTNET_NOLOGO: true
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   
-    steps:
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.301
-        source-url: https://nuget.pkg.github.com/ORG_NAME/index.json    
-      env:
-        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    steps:  
+    - uses: actions/checkout@v2  
+    - name: Setup .NET Core  
+      uses: actions/setup-dotnet@v1  
+      with:  
+        dotnet-version: 3.1.101  
     - name: Install dependencies  
       run: dotnet restore  
     - name: Build  
       run: dotnet build --configuration Release --no-restore  
     - name: Test  
       run: dotnet test --no-restore --verbosity normal
-      
-    - name: Download Artifacts 
-      uses: actions/download-artifact@v2
-      with:
-        name: ubuntu-latest
-        path: artifacts
-
-    - name: Push to GitHub Packages
-      run: dotnet nuget push artifacts/**/*.nupkg --skip-duplicate --no-symbols true   
+    - name: Pack with dotnet
+      run: dotnet pack src/Hubtel.ProgrammableServices.Sdk/Hubtel.ProgrammableServices.Sdk.csproj --output nuget-packages --configuration Release
+    - name: Push with dotnet
+      run: dotnet nuget push nuget-packages/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
       env:
         DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLE: false
