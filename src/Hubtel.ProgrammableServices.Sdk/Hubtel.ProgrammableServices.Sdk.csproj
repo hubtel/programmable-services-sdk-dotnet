@@ -5,19 +5,20 @@
     <Description>An improved version of USSD Framework SDK. 
       Presents a simplified, unified experience for building services that 
       render on all Hubtel platform channels (Web, POS, Mobile and USSD)</Description>
-    <PackageReleaseNotes>
-      First release. This version does the following:
-      - Easy service registration in ConfigureServices
-      - Quick setup of programmable service using middleware extensions
-      - Out of the box DI support for controllers
-    </PackageReleaseNotes>
+    <PackageReleaseNotes>First release. This version does the following:
+- Easy service registration in ConfigureServices
+- Quick setup of programmable service using middleware extensions
+- Out of the box DI support for controllers
+</PackageReleaseNotes>
+    <PackageTags>Hubtel;ProgrammableServices;USSD</PackageTags>
     <PackageIcon>hub.png</PackageIcon>
      <Company>Hubtel</Company>
     <Authors>Hubtel Engineers</Authors>
     <Version>1.1.0</Version>
-     <PackageId>Hubtel.ProgrammableServices.Sdk</PackageId>
+     <PackageId>Hubtel.ProgrammableServices</PackageId>
        <RepositoryUrl>https://github.com/hubtel/programmable-services-sdk-dotnet</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

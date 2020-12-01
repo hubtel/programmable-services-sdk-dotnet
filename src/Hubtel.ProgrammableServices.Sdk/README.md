@@ -1,5 +1,5 @@
 
-# Getting Started with Programmable Services SDK
+# Getting Started with Programmable Services
 
 This SDK helps you build service that can be deployed on Hubtel's platform in all channels (Web, USSD and Hubtel mobile app). Here are a few advantages of using this SDK:
 - Improved response times: Reflected instances are cached at startup and served faster
@@ -7,10 +7,10 @@ This SDK helps you build service that can be deployed on Hubtel's platform in al
 - Unified experience for USSD, Web, POS and mobile apps. JSON response from this SDK contains properties that are actually needed by Hubtel's Programmable Services API. No more "NextRoute", "IsRelease" properties hanging around.
 - Simplified programming pattern. A few lines of code can get you up and running.
  
-In order to get started with Hubtel.ProgrammableServices.Sdk, do the following activities
-### Install-Package Hubtel.ProgrammableServices.Sdk
+In order to get started with Hubtel.ProgrammableServices, do the following activities
+### Install Hubtel.ProgrammableServices
 
-    Install-Package Hubtel.ProgrammableServices.Sdk
+    Install-Package Hubtel.ProgrammableServices
 
                    
 ### Add to IServiceCollection in Program.cs or Startup.cs
@@ -40,7 +40,7 @@ In order to get started with Hubtel.ProgrammableServices.Sdk, do the following a
 
         
        
-        [HandleInitiation]
+        [HandleInitiation] 
         public async Task<ProgrammableServiceResponse> Start()
         {
             return await RenderResponse("hello world!");
