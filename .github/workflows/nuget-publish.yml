@@ -29,6 +29,6 @@ jobs:
       run: dotnet pack src/Hubtel.ProgrammableServices.Sdk/Hubtel.ProgrammableServices.Sdk.csproj --output nuget-packages --configuration Release
       
     - name: Push with dotnet
-      run: dotnet nuget push nuget-packages/*.nupkg --api-key oy2lc67kgqa553xfgc4a4x2qzdeoidrevhevq2sntzgklm --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push nuget-packages/*.nupkg --api-key xxx --source https://api.nuget.org/v3/index.json
       env:
         DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLE: false
