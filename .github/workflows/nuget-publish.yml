@@ -56,7 +56,7 @@ jobs:
         shell: bash
   deploy:
     needs: build
-    if: github.event_name == 'release'
+    #if: github.event_name == 'release'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
