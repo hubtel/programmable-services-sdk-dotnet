@@ -81,4 +81,4 @@ jobs:
           done
         shell: bash
       - name: Push to NuGet Feed
-        run: dotnet nuget push nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --skip-duplicate --api-key $NUGET_KEY
+        run: dotnet nuget push nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --skip-duplicate --api-key $NUGET_API_KEY
