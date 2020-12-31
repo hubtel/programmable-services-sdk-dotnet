@@ -18,7 +18,7 @@
      <PackageId>Hubtel.ProgrammableServices</PackageId>
        <RepositoryUrl>https://github.com/hubtel/programmable-services-sdk-dotnet</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
