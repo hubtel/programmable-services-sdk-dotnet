@@ -10,7 +10,7 @@ env:
   GITHUB_SOURCE: https://github.com/hubtel/programmable-services-sdk-dotnet
   GITHUB_USER: hubtel
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  NUGET_KEY: ${{ secrets.NUGET_KEY }}
+  NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
   VERSION: 1.1.1
 jobs:
   build:
@@ -81,4 +81,4 @@ jobs:
           done
         shell: bash
       - name: Push to NuGet Feed
-        run: dotnet nuget push nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --skip-duplicate --api-key $NUGET_API_KEY
+        run: dotnet nuget push nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --skip-duplicate --api-key $NUGET_KEY
