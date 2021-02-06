@@ -2,7 +2,7 @@
 # Getting Started with Programmable Services SDK
 ![.NET Core](https://github.com/hubtel/programmable-services-sdk-dotnet/workflows/.NET%20Core/badge.svg)
 
-This SDK helps you to build apps that are accessible on Hubtel's platform channels (Web, USSD and Hubtel mobile apps). It supercedes the current USSD Framework (https://github.com/hubtel/hubtel-ussd-csharp). Here are a few advantages it offers:
+This SDK helps you to build apps that are accessible on Hubtel's platform channels (Web, USSD and Hubtel mobile apps). It supercedes the erstwhile USSD Framework (https://github.com/hubtel/hubtel-ussd-csharp), which shall be discontinued on March 31st, 2021. Here are a few advantages it offers:
 - Improved response times: Reflected instances are cached at startup and served faster
 - Dependency Injection: Controllers can now leverage .NET Core's DI pattern. No need to attempt to create custom DI containers
 - Unified experience for USSD, Web, POS and mobile apps. JSON response from this SDK contains properties that are actually needed by Hubtel's Programmable Services API. No more "NextRoute", "IsRelease" properties hanging around.
