@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Hubtel.ProgrammableServices.Sdk.Core;
 using Hubtel.ProgrammableServices.Sdk.InteractionElements;
@@ -55,6 +56,26 @@ namespace ProgrammableServicesSampleApp.ProgrammableServiceControllers
                 _logger.LogError(e, e.Message);
                 return await Error();
             }
+        }
+        
+        [HandleResumeSession]
+        public async Task<ProgrammableServiceResponse> DoSessionResume(List<ResumeSessionInfo> sessionInfos)
+        {
+            var header = "Do you want to continue from previous session?";
+
+            var item1 = "YES";
+            var item2 = "NO";
+
+            var menu = Menu.New(header)
+                .AddItem(item1, sessionInfos.LastOrDefault()?.MethodName, sessionInfos.LastOrDefault()?.ControllerName)
+                .AddItem(item2, $"{nameof(Start)}");
+
+            // setup rich ux for web and mobile
+            return await RenderMenu(menu, new List<ProgrammableServicesResponseData>
+            {
+                new ProgrammableServicesResponseData(item1, "1", decimal.Zero),
+                new ProgrammableServicesResponseData(item2, "2", decimal.Zero),
+            }, null, header, ProgrammableServiceDataTypes.Menu);
         }
 
         #region Buy flow

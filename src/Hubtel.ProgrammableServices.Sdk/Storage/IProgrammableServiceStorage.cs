@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Hubtel.ProgrammableServices.Sdk.Storage
 {
@@ -11,6 +12,7 @@ namespace Hubtel.ProgrammableServices.Sdk.Storage
     {
         Task Set(string key, string value);
         Task<string> Get(string key);
+        Task<List<string>> GetKeys();
         Task<bool> Exists(string key);
         Task Delete(string key);
     }

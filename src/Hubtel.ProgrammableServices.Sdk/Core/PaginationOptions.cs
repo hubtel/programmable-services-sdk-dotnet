@@ -9,6 +9,14 @@
         public string PreviousPageKey { get; set; } = "8";
         public string PreviousPageDisplayText { get; set; } = "Back";
 
-        
+        public bool UseDefaultNumberListing { get; set; } = true;
+
+    }
+
+    public class PaginationElement
+    {
+        public string Key { get; set; }
+        public string Display { get; set; }
+        public string NumberingIndex { get; set; }
     }
 }

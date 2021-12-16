@@ -51,7 +51,8 @@ namespace ProgrammableServicesSampleApp
             services.AddHubtelProgrammableServices((p) => new ProgrammableServiceConfiguration
             {
                 Storage = new DefaultProgrammableServiceStorage(),
-                HubtelFulfilmentApiEndpoint = "http://ps.hubtel.com/callback" //put Hubtel's fulfilment endpoint here; this is a dummy
+                HubtelFulfilmentApiEndpoint = "http://ps.hubtel.com/callback", //put Hubtel's fulfilment endpoint here; this is a dummy
+                EnableResumeSession = true
             });
 
         

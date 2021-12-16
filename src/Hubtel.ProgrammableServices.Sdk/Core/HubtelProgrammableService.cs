@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Hubtel.ProgrammableServices.Sdk.Core
 {
@@ -18,7 +19,8 @@ namespace Hubtel.ProgrammableServices.Sdk.Core
         public HubtelProgrammableService(ProgrammableServiceConfiguration configuration
         
             ,IServiceProvider serviceProvider
-            ,ProgrammableServicesControllerActivator controllerActivator)
+            ,ProgrammableServicesControllerActivator controllerActivator
+            )
         {
             _configuration = configuration;
             
@@ -149,6 +151,14 @@ namespace Hubtel.ProgrammableServices.Sdk.Core
 
 
             }
+            else if (context.Request.GetActionType()== ProgrammableServiceActionType.Query || context.Request.GetActionType()== ProgrammableServiceActionType.Favorite)
+            {
+                await context.Store.Set(context.NextRouteKey, new ProgrammableServiceRoute
+                {
+                    ActionName = actionName,
+                    ControllerName = controllerName
+                }.ToJson());
+            }
 
             try
             {
@@ -237,12 +247,136 @@ namespace Hubtel.ProgrammableServices.Sdk.Core
                 controller.FormData = await controller.GetFormData();
                 var methodInfo = controllerInfo.Methods[routeInfo.ActionName].Method;
                 object[] args = { };
-                var response = await (Task<ProgrammableServiceResponse>)methodInfo.Invoke(controller, args);
+
+             
+                var sessionResumeKey = $"_sessionResume.{context.Request.Mobile}";
+
+                ProgrammableServiceResponse response;
+                if (context.Request.GetActionType()==ProgrammableServiceActionType.Initiation)
+                {
+                    if (_configuration.EnableResumeSession)
+                    {
+                        //check if previous session exists
+                        var sessionResumeValStr = await context.Store.Get(sessionResumeKey);
+                        var sessionResumeList =
+                            JsonConvert.DeserializeObject<List<ResumeSessionInfo>>(sessionResumeValStr);
+
+                        if (await context.Store.Exists(sessionResumeKey) && string.Equals(controllerInfo.TheType.Name,sessionResumeList.LastOrDefault()?.ControllerName) )
+                        {
+                            //if the previous last entry  is an initiation session...then just continue....
+                            if (sessionResumeList.LastOrDefault().UserRequest.GetActionType()== ProgrammableServiceActionType.Initiation)
+                            {
+                                response = await (Task<ProgrammableServiceResponse>)methodInfo.Invoke(controller, args);
+                            }
+                            else
+                            {
+                                var previousSessionId = sessionResumeList.FirstOrDefault().UserRequest.SessionId;
+                            
+                            
+                 
+                                var keys = await context.Store.GetKeys();
+
+
+                                var keysWithPreviousSessionId = keys.Where(k => k.StartsWith(previousSessionId)).ToList();
+                                //copy everything from the previous session to the new session
+                                foreach (var key in keysWithPreviousSessionId)
+                                {
+                               
+                                    var previousValue = await context.Store.Get(key);
+                                    await 
+                                        context.Store.Set(key.Replace(previousSessionId, context.Request.SessionId),
+                                            previousValue);
+                              
+                                }
+                                controller.FormData = await controller.GetFormData(); //important step, if not, FormData is always NULL
+                            
+                            
+                                var sessionResumeMethod = controllerInfo.Methods.Values.FirstOrDefault(m => m.IsSessionResumeMethod);
+
+                                if (sessionResumeMethod==null)
+                                {
+                                    throw new Exception($"no method found that has HandleResumeSession attribute");
+                                }
+                            
+                                await context.Store.Delete(sessionResumeKey); //so we don't have chaff data for this user
+                            
+                                response = await (Task<ProgrammableServiceResponse>)sessionResumeMethod.Method.Invoke(controller,new []{sessionResumeList});
+
+
+                            }
+                       
+
+                        }
+                        else
+                        {
+                            //just call the initiation handler...
+                            response = await (Task<ProgrammableServiceResponse>)methodInfo.Invoke(controller, args);
+                        }
+                        
+                        
+                    }
+                    else
+                    {
+                        response = await (Task<ProgrammableServiceResponse>)methodInfo.Invoke(controller, args);
+
+                    }
+                  
+                }
+                else
+                {
+                    response = await (Task<ProgrammableServiceResponse>)methodInfo.Invoke(controller, args);
+
+                }
+                
                
 
                 if (!response.IsRelease)
                 {
+                    if (!response.IsRedirect)
+                    {
+                        if (_configuration.EnableResumeSession)
+                        {
+                            List<ResumeSessionInfo> sessionResumeList;
+                     
+                            if (await context.Store.Exists(sessionResumeKey))
+                            {
+                                var sessionResumeValStr = await context.Store.Get(sessionResumeKey);
+                                sessionResumeList =
+                                    JsonConvert.DeserializeObject<List<ResumeSessionInfo>>(sessionResumeValStr);
+                            
+                                sessionResumeList.Add(new ResumeSessionInfo
+                                {
+                                    UserRequest = context.Request,
+                                    ServiceResponse = response,
+                                    MethodName = methodInfo.Name,
+                                    ControllerName = controllerInfo.TheType.Name
+                                });
+                            }
+                            else
+                            {
+                                sessionResumeList = new List<ResumeSessionInfo> {new ResumeSessionInfo
+                                {
+                                    UserRequest = context.Request,
+                                    ServiceResponse = response,
+                                    MethodName = methodInfo.Name,
+                                    ControllerName = controllerInfo.TheType.Name
+                                }};
+                            }
+
+                            await context.Store.Set(sessionResumeKey, JsonConvert.SerializeObject(sessionResumeList));
+
+                        }
+                    
+                        
+                    }
                     await context.Store.Set(context.NextRouteKey, response.NextRoute);
+                }
+                else
+                {
+                    if (_configuration.EnableResumeSession)
+                    {
+                        await context.Store.Delete(sessionResumeKey);
+                    }
                 }
 
                 if (response.IsRedirect)
@@ -253,5 +387,13 @@ namespace Hubtel.ProgrammableServices.Sdk.Core
                 return response;
             }
         }
+    }
+
+    public class ResumeSessionInfo
+    {
+        public ProgrammableServiceRequest UserRequest { get; set; }
+        public ProgrammableServiceResponse ServiceResponse { get; set; }
+        public string MethodName { get; set; }
+        public string ControllerName { get; set; }
     }
 }

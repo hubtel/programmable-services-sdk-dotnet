@@ -61,9 +61,7 @@ namespace Hubtel.ProgrammableServices.Sdk.Models
                 Type =  isUssd? ProgrammableServiceActionType.Release.ToString("G"): ProgrammableServiceActionType.AddToCart.ToString("G"),
                 Message = message,
                 Item = data,
-                DataType = ProgrammableServiceDataTypes.Display,
-
-                
+                DataType = ProgrammableServiceDataTypes.Display
             };
         }
 

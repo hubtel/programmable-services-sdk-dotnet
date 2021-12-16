@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Hubtel.ProgrammableServices.Sdk.Models
 {
-    /// <summary>
+     /// <summary>
     /// Presents properties used to hold information about a cart that may be ready for checkout
     /// </summary>
     public class ProgrammableServicesResponseCartData
