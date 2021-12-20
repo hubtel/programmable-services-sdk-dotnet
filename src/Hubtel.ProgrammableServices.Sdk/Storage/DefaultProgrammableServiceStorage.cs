@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hubtel.ProgrammableServices.Sdk.Storage
@@ -29,6 +31,8 @@ namespace Hubtel.ProgrammableServices.Sdk.Storage
 
             return Task.FromResult(string.Empty);
         }
+
+        public Task<List<string>> GetKeys() => Task.FromResult(_backingStore.Keys.ToList());
 
         public Task<bool> Exists(string key)
         {

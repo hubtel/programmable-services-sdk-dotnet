@@ -28,6 +28,7 @@ namespace Hubtel.ProgrammableServices.Sdk.Extensions
             }
             
             services.AddSingleton(configurationFactory);
+            
             services.RegisterProgrammableServicesControllers();
             services.AddHttpClient<IPsCallbackHttpClient, PsCallbackHttpClient>()
                 .ConfigurePrimaryHttpMessageHandler(handler =>
@@ -93,20 +94,25 @@ namespace Hubtel.ProgrammableServices.Sdk.Extensions
                 {
                     if (methodInfo.ReturnType == typeof(Task<ProgrammableServiceResponse>))
                     {
-                        if (methodInfo.GetCustomAttributes(typeof(HandleInitiation), true).FirstOrDefault() is HandleInitiation handleInitiationAttr)
+
+                        var psMethodInfo = new ProgammableServicesMethodInfo();
+                        
+                        if (methodInfo.GetCustomAttributes(typeof(HandleInitiation), true).FirstOrDefault() is
+                            HandleInitiation handleInitiationAttr
+                        )
                         {
-                            methodInfos[methodInfo.Name] = new ProgammableServicesMethodInfo
-                            {
-                                IsInitiationMethod = true,
-                                Method = methodInfo
-                            };
-                            continue;
+                            psMethodInfo.IsInitiationMethod = true;
                         }
-                        methodInfos[methodInfo.Name] = new ProgammableServicesMethodInfo
+                       if (methodInfo.GetCustomAttributes(typeof(HandleResumeSession), true).FirstOrDefault() is
+                            HandleResumeSession handleResumeSession
+                        )
                         {
-                            
-                            Method = methodInfo
-                        };
+                            psMethodInfo.IsSessionResumeMethod = true;
+                           
+                        }
+
+                       psMethodInfo.Method = methodInfo;
+                        methodInfos[methodInfo.Name] = psMethodInfo;
                     }
 
                 }

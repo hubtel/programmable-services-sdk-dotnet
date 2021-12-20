@@ -39,7 +39,7 @@ namespace Hubtel.ProgrammableServices.Sdk.Models
         /// <returns>True if request is detected to be from USSD source</returns>
         public static bool IsUssd(this ProgrammableServiceRequest request)
         {
-            if ("ussd".Equals(request.Platform))
+            if ("ussd".Equals(request.Platform,StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }

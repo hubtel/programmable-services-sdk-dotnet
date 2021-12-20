@@ -6,5 +6,6 @@ namespace Hubtel.ProgrammableServices.Sdk.Core
     {
         public IProgrammableServiceStorage Storage { get; set; }
         public string HubtelFulfilmentApiEndpoint { get; set; }
+        public bool EnableResumeSession { get; set; }
     }
 }

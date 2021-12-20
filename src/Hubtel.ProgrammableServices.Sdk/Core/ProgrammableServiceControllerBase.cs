@@ -423,7 +423,8 @@ namespace Hubtel.ProgrammableServices.Sdk.Core
                         .Take(paginationOptions.PageCount).Select(x => new InputOption
                     {
                         DisplayValue = x.Key,
-                        Value = x.Value
+                        Value = x.Value,
+                        Index = paginationOptions.UseDefaultNumberListing? (collection.Keys.ToList().IndexOf(x.Key)+1).ToString() : x.Value
                     }));
             }
 

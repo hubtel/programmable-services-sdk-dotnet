@@ -73,16 +73,19 @@ namespace ProgrammableServicesSampleApp.ProgrammableServiceControllers
                 {"Apple Watch Series 3", "iwatch_3"},
                 {"Apple Watch Series 4", "iwatch_4"},
                 {"Apple Watch Series 5", "iwatch_5"},
-                {"Macbook 2019 model", "macbook"},
+                {"Macbook 2019 model", "macbook"}
             };
 
-            return await PaginateForUssd(collection, new PaginationOptions
-            {
-                //PreviousPageDisplayText = "BACK",
-                //PreviousPageKey = "00",
-                //NextPageDisplayText = "MORE",
-                //NextPageKey = "99"
-            });
+            return await PaginateForUssd(collection,
+                paginationOptions: new PaginationOptions
+                {
+                    PageCount = 6,
+                    NextPageKey = "99",
+                    PreviousPageKey = "00",
+                    NextPageDisplayText = "MORE",
+                    PreviousPageDisplayText = "BACK",
+                    UseDefaultNumberListing = true 
+                });
         }
 
         public override Task<ProgrammableServiceResponse> OnPaginatedItemSelected(string value)
