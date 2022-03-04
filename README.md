@@ -2,7 +2,7 @@
 # Getting Started with Programmable Services SDK
 ![.NET Core](https://github.com/hubtel/programmable-services-sdk-dotnet/workflows/.NET%20Core/badge.svg)
 
-This SDK helps you to build apps that are accessible on Hubtel's platform channels (Web, USSD and Hubtel mobile apps). It supercedes the erstwhile USSD Framework (https://github.com/hubtel/hubtel-ussd-csharp), which has been discontinued since March 31st, 2021. Here are a few advantages it offers:
+This SDK helps you to build apps that are accessible on Hubtel's platform channels (Web, USSD and Hubtel mobile apps). It supercedes the erstwhile USSD Framework (https://github.com/hubtel/hubtel-ussd-csharp), which has been discontinued since March 31st, 2021. Here are a few advantages of the new SDK:
 - Improved response times: Reflected instances are cached at startup and served faster
 - Dependency Injection: Controllers can now leverage .NET Core's DI pattern. No need to attempt to create custom DI containers
 - Unified experience for USSD, Web, POS and mobile apps. JSON response from this SDK contains properties that are actually needed by Hubtel's Programmable Services API. No more "NextRoute", "IsRelease" properties hanging around.
@@ -22,7 +22,8 @@ In order to get started with Hubtel.ProgrammableServices.Sdk, create an empty AS
            {
                 return new ProgrammableServiceConfiguration
                 {
-                    Storage = new DefaultProgrammableServiceStorage()
+                    Storage = new DefaultProgrammableServiceStorage() 
+                    //you can override and use your own storage like Redis :)
                 };
             });
 
@@ -30,7 +31,8 @@ In order to get started with Hubtel.ProgrammableServices.Sdk, create an empty AS
 
 //in Configure(...) method 
 //we have extension methods to do route-to-code, if you want to ignore controllers explicitly
- //app.UseHubtelProgrammableService("/myapp", nameof(TestController));
+ //app.UseHubtelProgrammableService("/myapp", nameof(TestController)); //skip 3) if you're doing route-to-code
+ 
 ```
 
 ### 3) Add an empty Web API controller and fill in these lines of code. You might need to resolve some references
@@ -69,13 +71,13 @@ In order to get started with Hubtel.ProgrammableServices.Sdk, create an empty AS
 
 ```
 
-### 4) Create your ProgrammableService controller by adding a new file
+### 4) Create your ProgrammableService controller as shown below
 
 ```cs
  
     public class TestController : ProgrammableServiceControllerBase
     {
-        [HandleInitiation]
+        [HandleInitiation] //this is used by the SDK if not explicitly stated
         public async Task<ProgrammableServiceResponse> Start()
         {
             var menu = Menu.New("Welcome", Environment.NewLine + "by Hubtel")
@@ -206,4 +208,4 @@ Below is sample response created by the SDK:
 ```
 Many in-built features including pagination, data store (default is in-memory dictionary), intelligent intra-controller or inter-controller routing, interaction elements (such as Menu, Form and Input) can help you to get up to speed.
 
-Refer to https://developers.hubtel.com/docs/general-services-1 for more information
+Refer to https://businessdocs-developers.hubtel.com/docs/general-services-1 for more information
