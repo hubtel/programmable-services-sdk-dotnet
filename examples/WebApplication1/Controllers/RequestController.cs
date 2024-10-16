@@ -41,7 +41,8 @@ namespace ProgrammableServicesSampleApp.Controllers
         {
             
             //this action will be called anytime a user wants to interact with your application
-            _logger.LogDebug("received request for {msisdn} {session_id} {gs_request}", request.Mobile, request.SessionId,
+            var sanitizedSessionId = request.SessionId?.Replace(Environment.NewLine, "").Replace("\n", "").Replace("\r", "");
+            _logger.LogDebug("received request for {msisdn} {session_id} {gs_request}", request.Mobile, sanitizedSessionId,
                 JsonConvert.SerializeObject(request));
             
             var response = await _programmableService.ExecuteInteraction(request, nameof(EvdController));
